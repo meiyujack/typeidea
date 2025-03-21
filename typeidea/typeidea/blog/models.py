@@ -21,11 +21,15 @@ class Category(models.Model):
     owner=models.ForeignKey(User,verbose_name="作者",on_delete=models.SET_NULL,blank=True,null=True,)
     created_time=models.DateTimeField(auto_now_add=True,verbose_name="创建时间")
 
+    def __str__(self):
+        return self.name
+
 
 class Tag(models.Model):
 
     class Meta:
         verbose_name=verbose_name_plural="标签"
+
     STATUS_NORMAL=1
     STATUS_DELETE=0
     STATUS_ITEMS=(
@@ -35,6 +39,9 @@ class Tag(models.Model):
 
     name=models.CharField(max_length=10,verbose_name="名称")
     status=models.PositiveIntegerField(default=STATUS_NORMAL,choices=STATUS_ITEMS,verbose_name="状态")
+
+    def __str__(self):
+        return self.name
     
 
 class Post(models.Model):
@@ -53,10 +60,13 @@ class Post(models.Model):
     )
 
     title=models.CharField(max_length=255,verbose_name="标题")
-    desc=models.CharField(max_length=1024,blank=True,verbose_name="摘要")
+    description=models.CharField(max_length=1024,blank=True,verbose_name="摘要")
     content=models.TextField(verbose_name="正文",help_text="正文必须为MarkDown 格式")
     status=models.PositiveIntegerField(default=STATUS_NORMAL,choices=STATUS_ITEMS,verbose_name="状态")
-    category=models.OneToOneField(Category,verbose_name="分类",on_delete=models.CASCADE)
-    tag=models.ManyToManyField(Tag,verbose_name="标签")
+    category=models.ForeignKey(Category,verbose_name="分类",on_delete=models.DO_NOTHING)
+    tags=models.ManyToManyField(Tag,verbose_name="标签")
     owner=models.ForeignKey(User,verbose_name="作者",on_delete=models.CASCADE)
     created_time=models.DateTimeField(auto_now_add=True,verbose_name="创建时间")
+
+    def __str__(self):
+        return self.title
