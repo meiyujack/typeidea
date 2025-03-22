@@ -12,3 +12,9 @@ wheels/
 # From the book
 *.swp
 *.sqlite3
+
+# VSC
+.vscode
+
+# About database
+migrations/

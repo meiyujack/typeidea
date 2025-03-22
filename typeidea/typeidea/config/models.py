@@ -2,8 +2,10 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
+from typeidea.base_models import BaseModel
 
-class Link(models.Model):
+
+class Link(BaseModel):
     class Meta:
         verbose_name=verbose_name_plural="友链"
 
@@ -24,7 +26,7 @@ class Link(models.Model):
         return self.title
 
 
-class SideBar(models.Model):
+class SideBar(BaseModel):
 
     class Meta:
         verbose_name=verbose_name_plural="侧边栏"

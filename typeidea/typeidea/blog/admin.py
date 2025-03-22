@@ -9,28 +9,20 @@ from typeidea.custom_site import custom_site
 from typeidea.base_admin import BaseOwnerAdmin
 
 
-class PostInline(admin.TabularInline):  # 可选择继承自admin.StackedInline,以获取不同的展示样式
-
-    fields=('title','description')
-    extra=1  # 控制额外多几个
-    model=Post
-
-
 @admin.register(Category,site=custom_site)
 class CategoryAdmin(BaseOwnerAdmin):
-    inlines=[PostInline,]
-    list_display=('name','status','is_nav','created_time','post_count')
+    list_display=('name','status','is_nav','owner','created_time','post_count')
     fields=('name','status','is_nav')
     
     def post_count(self,obj):
-        return obj.post_set.count()
+        return obj.post.count()
 
     post_count.short_description="文章数量"
 
 
 @admin.register(Tag,site=custom_site)
-class TagAdmin(BaseOwnerAdmin):
-    list_display=('name','status')
+class TagAdmin(admin.ModelAdmin):
+    list_display=('id','name','status')
     fields=('name','status')
     
 class CategoryOwnerFilter(admin.SimpleListFilter):
@@ -51,11 +43,11 @@ class CategoryOwnerFilter(admin.SimpleListFilter):
 
 @admin.register(Post,site=custom_site)
 class PostAdmin(BaseOwnerAdmin):
-    form=PostAdminForm
+    # form=PostAdminForm
 
     class Media:
         css={
-            'all':("https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css",),
+            'all':("https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/css/bootstrap.min.css",)
         }
         js=("https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.js",)
 
@@ -72,10 +64,10 @@ class PostAdmin(BaseOwnerAdmin):
     save_on_top=True
 
     # fields=(('category','title'),'description','status','content','tags')
-    fieldsets=(('基础配置',{'description':'基础配置描述','fields':(('title','category'),'status',)}),
+    fieldsets=[('基础配置',{'description':'基础配置描述','fields':(('title','category'),'status')}),
                ('内容',{'fields':('description','content')}),
                ('额外信息',{'classes':('collapse',),'fields':('tags',)})
-               )
+    ]
     
     # filter_vertical=('tag',)
 

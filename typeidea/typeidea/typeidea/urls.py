@@ -17,9 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,re_path
 
+from blog.views import post_list,post_detail
+from config.views import links
 from .custom_site import custom_site
 
+
 urlpatterns = [
+    re_path(r'^$',post_list),
+    re_path(r'^category/(?P<category_id>\d+)/$',post_list),
+    re_path(r'^tags/(?P<tag_id>\d+)/$',post_list),
+    re_path(r'^post/(?P<post_id>\d+).html$',post_detail),
+    re_path(r'^links/$',links),
     re_path(r'^super_admin/',admin.site.urls),
     re_path(r'^admin/', custom_site.urls)
 ]
