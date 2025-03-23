@@ -15,7 +15,7 @@ class CategoryAdmin(BaseOwnerAdmin):
     fields=('name','status','is_nav')
     
     def post_count(self,obj):
-        return obj.post.count()
+        return obj.posts.count()
 
     post_count.short_description="文章数量"
 
@@ -51,7 +51,7 @@ class PostAdmin(BaseOwnerAdmin):
         }
         js=("https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.js",)
 
-    list_display=['title','category','status','created_time','operate']
+    list_display=['title','category','tags','status','created_time','operate']
     list_display_links=[]
 
     list_filter=[CategoryOwnerFilter]
@@ -64,9 +64,9 @@ class PostAdmin(BaseOwnerAdmin):
     save_on_top=True
 
     # fields=(('category','title'),'description','status','content','tags')
-    fieldsets=[('基础配置',{'description':'基础配置描述','fields':(('title','category'),'status')}),
+    fieldsets=[('基础配置',{'description':'基础配置描述','fields':(('title','category','tags'),'status')}),
                ('内容',{'fields':('description','content')}),
-               ('额外信息',{'classes':('collapse',),'fields':('tags',)})
+               ('额外信息',{'classes':('collapse',),'fields':()})
     ]
     
     # filter_vertical=('tag',)
