@@ -26,7 +26,7 @@ urlpatterns = [
     re_path(r'^$',post_list),
     re_path(r'^category/(?P<category_id>\d+)/$',post_list),
     re_path(r'^tags/(?P<tag_id>\d+)/$',post_list),
-    re_path(r'^post/(?P<post_id>\d+).html$',post_detail),
+    path('post/<int:post_id>.html',post_detail),
     re_path(r'^links/$',links),
     re_path(r'^super_admin/',admin.site.urls),
     re_path(r'^admin/', custom_site.urls)

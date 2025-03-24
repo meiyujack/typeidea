@@ -1,8 +1,9 @@
 {% if post %}
-<h1>{{ post.title }}</h1>
+<h3>{{ post.title }}</h3>
 <div>
     <span>分类：{{ post.category.name }}</span>
     <span>作者：{{ post.owner.username }}</span>
+    <span>时间：{{ post.created_time }}</span>
 </div>
 <hr/>
 <p>

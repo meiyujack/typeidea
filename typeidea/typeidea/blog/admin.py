@@ -51,7 +51,7 @@ class PostAdmin(BaseOwnerAdmin):
         }
         js=("https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.3/js/bootstrap.bundle.js",)
 
-    list_display=['title','category','tags','status','created_time','operate']
+    list_display=['title','category','status','created_time','operate']
     list_display_links=[]
 
     list_filter=[CategoryOwnerFilter]
