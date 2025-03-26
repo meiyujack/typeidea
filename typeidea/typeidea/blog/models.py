@@ -61,12 +61,15 @@ class Post(BaseModel):
         (STATUS_DRAFT,'草稿'),
     )
 
+    def set_default_tag():
+        return [10]
+
     title=models.CharField(max_length=255,verbose_name="标题")
     description=models.CharField(max_length=1024,blank=True,verbose_name="摘要")
     content=models.TextField(verbose_name="正文",help_text="正文必须为MarkDown格式")
     status=models.PositiveIntegerField(default=STATUS_NORMAL,choices=STATUS_ITEMS,verbose_name="状态")
-    category=models.ForeignKey(Category,verbose_name="分类",on_delete=models.DO_NOTHING,related_name="posts")
-    tags=models.ManyToManyField(Tag,related_name="posts",default=0,verbose_name="标签")
+    category=models.ForeignKey(Category,verbose_name="分类",on_delete=models.DO_NOTHING,related_name="posts",default=0)
+    tags=models.ManyToManyField(Tag,related_name="posts",default=set_default_tag(),verbose_name="标签")
     owner=models.ForeignKey(User,verbose_name="作者",on_delete=models.CASCADE)
     created_time=models.DateTimeField(auto_now_add=True,verbose_name="创建时间")
 

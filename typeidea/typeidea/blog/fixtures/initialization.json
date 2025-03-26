@@ -1,7 +1,7 @@
 [
     {
         "model":"blog.tag",
-        "pk":0,
+        "pk":10,
         "fields":{
             "name":"生活",
             "status":1
